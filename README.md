@@ -57,9 +57,15 @@ python manage.py runserver
 
 Access the application at http://127.0.0.1:8000.
 
+
 Usage-
+
 Users can create accounts and personalize their profiles.
+
 Post photos.
+
 Engage with posts through likes and comments.
+
 Follow other users to see their content in your feed.
+
 Explore trending posts and new users through the Explore page.
