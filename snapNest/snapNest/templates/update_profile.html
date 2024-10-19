@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        /* Custom styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "images/home.png" %}'); 
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #fff;
+        }
+        header {
+            background-color: rgba(40, 40, 40, 0.8);
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .container {
+            margin-top: 120px;  /* Adjusted for fixed header */
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+            background-color: rgba(169, 169, 169, 0.5); 
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        h2 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block; /* Ensures the label is a block-level element */
+            margin-bottom: 8px; /* Add spacing below the label */
+            color: #333; /* Ensure a visible color */
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .profile-photo {
+            max-width: 150px;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        footer {
+            background-color: rgba(40, 40, 40, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+            margin-top: auto;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h2>User Profile</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" value="{{ user.username }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="{{ user.email }}" required>
+            </div>
+
+            <hr>
+
+            <h3>Profile Information</h3>
+            <div class="form-group">
+                <label for="profile_photo">Profile Photo</label>
+                {% if user_profile.profile_photo %}
+                    <img src="{{ user_profile.profile_photo.url }}" alt="Profile Photo" class="profile-photo">
+                {% endif %}
+                <input type="file" name="profile_photo" id="profile_photo">
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <textarea name="bio" id="bio" rows="4">{{ user_profile.bio }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="privacy">Privacy</label>
+                <select name="privacy" id="privacy">
+                    <option value="public" {% if user_profile.privacy == 'public' %}selected{% endif %}>Public</option>
+                    <option value="private" {% if user_profile.privacy == 'private' %}selected{% endif %}>Private</option>
+                </select>
+            </div>
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>
+ 
+

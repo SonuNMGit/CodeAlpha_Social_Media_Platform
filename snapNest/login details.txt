@@ -1,0 +1,15 @@
+Create a super user details to manage the data.
+
+singup and login to create user profile.
+
+to run on desktop:
+cd snapNest
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+to run on mobile (make sure phone and your desktop connect to same wifi):
+ipconfig (these give your ip address)
+python manage.py runserver add_your_ipAddress:8000
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'add_your_ipAddress'] in settings.py

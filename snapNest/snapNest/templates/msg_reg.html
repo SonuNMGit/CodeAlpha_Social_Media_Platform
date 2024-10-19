@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Requests</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{% static "images/home.png" %}');
+            background-color: #f0f8ff; /* Light blue background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* White with transparency */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .message-request {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .username {
+            font-weight: bold;
+        }
+
+        .accept-button, .reject-button {
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .accept-button:hover {
+            background-color: #85e085;
+        }
+
+        .reject-button {
+            background-color: #e74c3c;
+        }
+
+        .reject-button:hover {
+            background-color: #ff7f7f;
+        }
+
+        .no-requests {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1>Message Requests</h1>
+        <div id="message-requests">
+            {% for message in request.user.received_messages.all %}
+                <div class="message-request">
+                    <span class="username">{{ message.sender.username }}</span>
+                    <span>{{ message.content }}</span>
+                    <div>
+                        <form action="{% url 'accept_follow_request' message.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="accept-button">Accept</button>
+                        </form>
+                        <form action="{% url 'reject_follow_request' message.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="reject-button">Reject</button>
+                        </form>
+                        <form action="{% url 'delete_message' message.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="delete-button">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="no-requests">No message requests sent.</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

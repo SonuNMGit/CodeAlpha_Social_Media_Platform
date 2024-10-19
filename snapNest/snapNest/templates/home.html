@@ -1,0 +1,335 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <title>Welcome - Static Version</title>
+    <style>
+        /* Apply background image to the whole page */
+        body {
+            background-image: url('{% static "images/home.png" %}'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: #333;
+            padding-top: 200px;
+        }
+
+        /* General container styling */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Add slight transparency to the container */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling the welcome header */
+        h1 {
+            font-size: 32px;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .post-item {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-item strong {
+            font-size: 1.2em;
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .post-item p {
+            font-size: 1.2em;
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .post-item span {
+            color: #ffffff;
+        }
+
+        .post-item small {
+            display: block;
+            margin-top: 10px;
+            color: #bbbbbb;
+        }
+
+        .post-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .no-posts {
+            text-align: center;
+            color: #bbbbbb;
+            font-size: 1.2em;
+            padding: 20px;
+        }
+
+
+        /* Search bar styling */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .search-container input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #85e085;
+        }
+
+        /* Styling for user results */
+        .user-result {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-result img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .user-result a {
+            font-size: 18px;
+            color: #2e8b57;
+            text-decoration: none;
+        }
+
+        .user-result a:hover {
+            text-decoration: underline;
+        }
+
+        .no-user-message {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Like button styling */
+        .like-button {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .like-button.liked {
+            color: #ff0000;
+        }
+
+        .like-count {
+            color: #bbbbbb;
+            margin-left: 10px;
+        }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comment-item {
+            padding: 10px;
+            background-color: #000000;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .comment-owner {
+            color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        .comment-content {
+            color: #cccccc;
+        }
+
+        .comment-delete-button {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .comment-form {
+            margin-top: 15px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            border-radius: 5px;
+            padding: 10px;
+            border: 1px solid #bbb;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 50px;
+        }
+
+        .comment-form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #2e8b57;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .comment-box {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="container">
+        <h1>Search Users</h1>
+
+        <form method="GET" action="{% url 'search_user' %}" class="search-container">
+            <input type="text" name="q" placeholder="Enter username..." value="{{ request.GET.q }}">
+            <button type="submit">Search</button>
+        </form>
+
+        {% if users %}
+            <h2>Search Results</h2>
+            <div>
+                {% for user in users %}
+                    <div class="user-result">
+                        {% if user.userprofile.profile_photo %}
+                            <img src="{{ user.userprofile.profile_photo.url }}" alt="{{ user.username }}">
+                        {% else %}
+                            <img src="{% static 'images/default-profile.jpg' %}" alt="Default Profile">
+                        {% endif %}
+                        <div>
+                            <a href="{% url 'profile' user_id=user.id %}">{{ user.username }}</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elif request.GET.q %}
+            <div class="no-user-message">
+                <p>User not found. Please try again.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <h1>Posts from Users You're Following</h1>
+
+    <div class="posts-container">
+        {% for post in posts %}
+            <div class="post-item">
+                <strong>{{ post.user.username }}</strong>
+                <p>{{ post.content }}</p>
+                <small>{{ post.created_at }}</small>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post Image">
+                {% endif %}
+    
+                <form action="{% url 'toggle_like_post' post.id %}" method="POST" class="like-form" data-post-id="{{ post.id }}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="like-button {% if user in post.likes.all %}liked{% endif %}">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </form>
+                <span>{{ post.likes.count }} Likes</span>  
+            </div>
+
+            <div class="comments-section">
+                <h4>Comments</h4>
+                {% for comment in post.comments.all %}
+                    <div class="comment-item">
+                        <span class="comment-owner">{{ comment.user.username }}</span>
+                        <span class="comment-content">{{ comment.content }}</span>
+
+                        {% if comment.user == request.user %}
+                            <form action="{% url 'delete_comment' comment.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="comment-delete-button">Delete</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <p>No comments yet.</p>
+                {% endfor %}
+
+                <div class="comment-form">
+                    <form action="{% url 'add_comment' post.id %}" method="POST">
+                        {% csrf_token %}
+                        <textarea name="comment" class="comment-box" placeholder="Add a comment..."></textarea>
+                        <button type="submit">Comment</button>
+                    </form>
+                </div>
+            </div>
+
+        {% empty %}
+            <div class="no-posts">No posts available from users you're following.</div>
+        {% endfor %}
+    </div>    
+
+    {% include 'footer.html' %}
+</body>
+</html>

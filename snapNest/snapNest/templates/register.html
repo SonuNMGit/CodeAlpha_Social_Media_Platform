@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Register - SnapNest</title>
+    <style>
+        body {
+            background-image: url('{% static "images/login_signup.png" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+        .signup-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center; /* Center the heading */
+        }
+
+        /* Styling the bio field (textarea) to stay on one line */
+        textarea {
+            height: 40px; /* Set a fixed height */
+            resize: none; /* Disable resizing */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="signup-container">
+            <h2>Register</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {{ profile_form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="{% url 'login' %}" class="nav-item nav-link">Login here</a></p>
+        </div>
+    </div>
+</body>
+</html>

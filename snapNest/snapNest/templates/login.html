@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <title>Login - SnapNest</title>
+    <style>
+        body {
+            background-image: url('{% static "images/login_signup.png" %}'); /* Replace with your image URL */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            height: 100vh; /* Full height of the viewport */
+        }
+        .login-container {
+            max-width: 400px; /* Max width for the form */
+            margin: 100px auto; /* Center the form vertically and horizontally */
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8); 
+            color: white; /* Change text color to white */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        h2 {
+            text-align: center; /* Center the heading */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+            <h2>Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        <div class="text-center mt-3">
+            <p>Forgot your password? <a href="/reset-password" class="nav-item nav-link">Click here</a></p>
+            <p>Don't have an account? <a href="{% url 'register' %}" class="nav-item nav-link">Register here</a></p>
+        </div>
+    </div>    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
+</body>
+</html>
