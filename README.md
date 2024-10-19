@@ -5,12 +5,19 @@ SnapNest is a vibrant social media platform that allows users to connect, share,
 
 
 Features-
+
 User Registration and Authentication: Secure sign-up and login processes.
+
 User Profiles: Personalized user profiles with profile pictures, bios, and the ability to showcase user posts.
+
 Post Creation: Users can upload photos.
+
 Feed: A dynamic feed displaying posts from followed users and popular content.
+
 Likes and Comments: Users can like and comment on posts to encourage interaction.
+
 Follow/Unfollow System: Users can follow other users to see their content in their feed.
+
 Explore Page: Discover trending posts and new users.
 
 
